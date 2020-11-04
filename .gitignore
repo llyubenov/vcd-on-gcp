@@ -1,5 +1,11 @@
 # Local .terraform directories
+.DS_Store
 **/.terraform/*
+*.json
+/files/vcd-binaries/*.bin
+/files/vcd-keystore-file/*.ks
+/files/vcd-lb-cert/*.key
+/files/vcd-lb-cert/*.crt
 
 # .tfstate files
 *.tfstate
