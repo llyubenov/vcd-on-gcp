@@ -1,10 +1,10 @@
 variable "gcloud_project" {
   description = "GCloud project for this deployment."
-  default     = "vlp-poc"
+  default     = ""
 }
 
 variable "gcloud_region" {
-  default     = "us-east4"
+  default     = ""
   description = "GCE region to use for this deployment."
 }
 
