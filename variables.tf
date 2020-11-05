@@ -44,19 +44,19 @@ variable "vcd_keystore_filename" {
 
 variable "lb_cert_filename" {
   type        = string
-  default     = "star_test_vmwlp_com.crt"
+  default     = ""
   description = "The path to the VCD UI Loadbalancer certificate file. The file must be located in 'files/vcd-lb-cert/' folder, e.g. - files/vcd-lb-cert/cert.crt."
 }
 
 variable "lb_cert_key_filename" {
   type        = string
-  default     = "star_test_vmwlp_com.key"
+  default     = ""
   description = "The path to the VCD UI Loadbalancer certificate key file. The file must be located in 'files/vcd-lb-cert/' folder, e.g. - files/vcd-lb-cert/cert.key."
 }
 
 variable "vcd_keystore_filename_password" {
   description = "VCD Java Keystore filename password"
-  default     = "7BAG5qj*VKn&n3"
+  default     = ""
 }
 
 variable "vcd_admin_username" {
@@ -81,5 +81,5 @@ variable "vcd_system_name" {
 
 variable "vcd_serial_number" {
   description = "Serial number to license the VCD instalation"
-  default     = "100RK-AJ20N-089N9-0H822-35UK3"
+  default     = ""
 }
