@@ -38,7 +38,7 @@ The modules will create the following resources:
 | target_size_console | The target number of instances for the VCD Console managed instance group | `number` | `1` | no |
 | vcd_binary_filename | The name of the VCD binary file located in the `files/vcd-binaries/` folder. | `string` | `""` | yes |
 | vcd_keystore_filename | The name of the VCD Java Keystore file located in the `files/vcd-cert-file` folder, e.g. - `certificates.ks`. | `string` | `""` | yes |
-| vcd_keystore_filename_password | VCD Java Keystore file password | `string` | `""` | yes |
+| vcd_keystore_password | VCD Java Keystore file password | `string` | `""` | yes |
 | lb_cert_filename | The name of the VCD UI HTTPS Loadbalancer certificate file located in `files/vcd-lb-cert/` folder, e.g. - `cert.crt`. | `string` | `""` | yes |
 | lb_cert_key_filename | The name of the VCD UI HTTPS Loadbalancer certificate key file located in `files/vcd-lb-cert/` folder, e.g. - `cert.key`. | `string` | `""` | yes |
 | vcd_admin_username | VCD Administrator username | `string` | `vcd_admin` | no |

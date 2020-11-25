@@ -69,7 +69,7 @@ module "vcd-cells" {
   vcd_db_username                = module.gloud-sql.vcddb-username
   vcd_db_username_password       = module.gloud-sql.vcddb-username-password
   vcd_keystore_filename          = var.vcd_keystore_filename
-  vcd_keystore_filename_password = var.vcd_keystore_filename_password
+  vcd_keystore_filename_password = var.vcd_keystore_password
   vcd_admin_username             = var.vcd_admin_username
   vcd_admin_email                = var.vcd_admin_email
   vcd_admin_password             = var.vcd_admin_password
