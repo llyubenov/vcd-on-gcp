@@ -12,7 +12,7 @@ The modules will create the following resources:
 - The necessary firewall rules for the Cloud Dircetor Deployment to work.
 - Filestore instance that will be mounter by the VCD cells for as a transfer store.
 - Cloud SQL Postgres Instance for the VCD databease.
-- Compute Engin Instance:
+- Compute Engine Instances:
   - Bastion VM to access the VCD Cells thru it.
   - VCD Cells (minimum 2) to run the Cloud Director Services. The cels are separated in two Managed Insntace Groups, based on the function the execute - API/UI and Console Proxy.
 - Two Load Balancers:
