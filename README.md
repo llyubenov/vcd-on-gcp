@@ -1,4 +1,4 @@
-# VMware Cloud Director on Google Cloud Terraform Modules
+# VMware Cloud Director on Google Cloud - Terraform Modules
 
 This project contains Terraform mudules that can be used to deploy VMware Cloud Director on Google Cloud.
 The idea is for the deployed VCD instance to be able to connect and leverage vSphere resources from Google Compute VMware Engine.
