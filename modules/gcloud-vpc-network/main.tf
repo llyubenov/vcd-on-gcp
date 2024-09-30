@@ -4,11 +4,11 @@ resource "google_compute_global_address" "vcd-ui-ip" {
   address_type = "EXTERNAL"
 }
 
-resource "google_compute_global_address" "vcd-console-ip" {
-  name         = "vcd-console-address"
-  ip_version   = "IPV4"
-  address_type = "EXTERNAL"
-}
+# resource "google_compute_global_address" "vcd-console-ip" {
+#   name         = "vcd-console-address"
+#   ip_version   = "IPV4"
+#   address_type = "EXTERNAL"
+# }
 
 resource "google_compute_network" "vcd-network" {
   name                    = "vcd-network"

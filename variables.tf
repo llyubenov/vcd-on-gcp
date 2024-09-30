@@ -5,7 +5,7 @@ variable "gcloud_project" {
 }
 
 variable "gcloud_region" {
-  default     = ""
+  default     = "us-central1"
   description = "GCE region to use for this deployment."
 }
 

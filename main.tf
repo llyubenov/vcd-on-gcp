@@ -2,7 +2,10 @@ provider "google" {
   credentials         = file("vlp-poc-credentials.json")
   project             = var.gcloud_project
 }
-
+provider "google-beta" {
+  credentials         = file("vlp-poc-credentials.json")
+  project             = var.gcloud_project
+}
 module "gcloud-storage" {
   source                = "./modules/gcloud-storage"
   region                = var.gcloud_region
@@ -33,7 +36,7 @@ module "gloud-sql" {
 module "bastion-vm" {
   source             = "./modules/gcloud-bastion"
   target_size        = 1
-  image_family       = "centos-7"
+  image_family       = "centos-stream-9"
   tags               = ["bastion"]
   machine_type       = "n1-standard-1"
   name               = "bastion-vm"
@@ -58,7 +61,7 @@ module "vcd-cells" {
   subnetwork                     = module.gcloud-vpc-network.vcd-subnetwork
   initial_vcd_cell_machine_type  = "e2-medium"
   vcd_cells_machine_type         = "n2-standard-4"
-  image_family                   = "centos-8"
+  image_family                   = "centos-stream-9"
   disk_size_gb                   = 20
   disk_type                      = "pd-standard"
   vcd_ui_ip                      = module.gcloud-vpc-network.vcd-ui-ip
@@ -83,7 +86,7 @@ module "vcd-cells" {
   lb_cert_filename     = var.lb_cert_filename
   lb_cert_key_filename = var.lb_cert_key_filename
   vcd_ui_ip            = module.gcloud-vpc-network.vcd-ui-ip
-  vcd_console_ip       = module.gcloud-vpc-network.vcd-console-ip
+  #vcd_console_ip       = module.gcloud-vpc-network.vcd-console-ip
   vcd_ui_mig           = module.vcd-cells.vcd-ui-mig
-  vcd_console_mig           = module.vcd-cells.vcd-console-mig
+  #vcd_console_mig      = module.vcd-cells.vcd-console-mig
   }

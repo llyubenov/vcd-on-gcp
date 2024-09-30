@@ -19,7 +19,7 @@ variable "target_size_console" {
 
 variable "image_family" {
   description = "Source image family."
-  default     = "centos-8"
+  default     = "centos-stream-9"
 }
 
 variable "image_project" {
@@ -212,6 +212,7 @@ variable "health_check" {
     request             = string
     request_path        = string
     host                = string
+    enable_logging      = bool
   })
   default = {
     type                = "http"
@@ -226,5 +227,6 @@ variable "health_check" {
     request             = ""
     request_path        = "/api/server_status"
     host                = ""
+    enable_logging      = "false"
   }
 }

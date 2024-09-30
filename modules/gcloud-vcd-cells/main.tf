@@ -128,16 +128,16 @@ module "mig_ui" {
   depends_on        = [time_sleep.wait_5_minutes]
 }
 
-module "mig_console" {
-  source  = "terraform-google-modules/vm/google//modules/mig"
+# module "mig_console" {
+#   source  = "terraform-google-modules/vm/google//modules/mig"
 
-  project_id        = var.project
-  region            = var.region
-  target_size       = var.target_size_console
-  hostname          = "${var.vcd_cells_name_prefix}-console"
-  health_check      = var.health_check
-  named_ports       = var.named_ports_console
-  instance_template = google_compute_instance_template.vcd-cells.self_link
+#   project_id        = var.project
+#   region            = var.region
+#   target_size       = var.target_size_console
+#   hostname          = "${var.vcd_cells_name_prefix}-console"
+#   health_check      = var.health_check
+#   named_ports       = var.named_ports_console
+#   instance_template = google_compute_instance_template.vcd-cells.self_link
 
-  depends_on        = [time_sleep.wait_5_minutes]
-}
+#   depends_on        = [time_sleep.wait_5_minutes]
+# }

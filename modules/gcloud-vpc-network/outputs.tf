@@ -3,10 +3,10 @@ output vcd-ui-ip {
   description = "VCD UI Load Balancer IP"
 }
 
-output vcd-console-ip {
-  value       = google_compute_global_address.vcd-console-ip.address
-  description = "VCD Console Load Balancer IP"
-}
+# output vcd-console-ip {
+#   value       = google_compute_global_address.vcd-console-ip.address
+#   description = "VCD Console Load Balancer IP"
+# }
 
 output vcd-network {
   value       = google_compute_network.vcd-network.name

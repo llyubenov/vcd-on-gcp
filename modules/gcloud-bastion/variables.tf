@@ -20,7 +20,7 @@ variable "target_size" {
 
 variable "image_family" {
   description = "Source image family for the Bastion."
-  default     = "centos-7"
+  default     = "centos-stream-9"
 }
 
 variable "image_project" {
@@ -77,7 +77,7 @@ variable "health_check" {
     proxy_header        = string
     port                = number
     request             = string
-
+    enable_logging      = bool
     # Unused fields.
     request_path = string
     host         = string
@@ -93,7 +93,7 @@ variable "health_check" {
     proxy_header        = "NONE"
     port                = 22
     request             = ""
-
+    enable_logging      = "false"
     # Unused fields.
     request_path = ""
     host         = ""
