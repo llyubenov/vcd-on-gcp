@@ -7,24 +7,19 @@ variable "region" {
   description = "The GCP region where the vcd instances resides."
 }
 
-variable "target_size_ui" {
-  description = "The target number of running instances for this managed instance group. This value should always be explicitly set unless this resource is attached to an autoscaler, in which case it should never be set."
-  default     = 1
-}
-
-variable "target_size_console" {
+variable "target_ui_cells_number" {
   description = "The target number of running instances for this managed instance group. This value should always be explicitly set unless this resource is attached to an autoscaler, in which case it should never be set."
   default     = 1
 }
 
 variable "image_family" {
   description = "Source image family."
-  default     = "centos-stream-9"
+  default     = ""
 }
 
 variable "image_project" {
   description = "Project where the source image comes from"
-  default     = "centos-cloud"
+  default     = ""
 }
 
 variable "tags" {
@@ -65,6 +60,11 @@ variable "subnetwork" {
   description = "Name or Self link for the subnetwork on which the VCD cells should live"
 }
 
+variable "vcd_heap_size_max" {
+  description = "Max Java Heap Size value in MB"
+  default     = 4096
+}
+
 variable "disk_size_gb" {
   description = "Boot disk size in GB"
   default     = 20
@@ -94,19 +94,19 @@ variable "named_ports_ui" {
   ]
 }
 
-variable "named_ports_console" {
-  description = "Named name and named port. https://cloud.google.com/load-balancing/docs/backend-service#named_ports"
-  type = list(object({
-    name = string
-    port = number
-  }))
-  default = [
-    {
-      name = "tcp"
-      port = 8443
-    }
-  ]
-}
+# variable "named_ports_console" {
+#   description = "Named name and named port. https://cloud.google.com/load-balancing/docs/backend-service#named_ports"
+#   type = list(object({
+#     name = string
+#     port = number
+#   }))
+#   default = [
+#     {
+#       name = "tcp"
+#       port = 8443
+#     }
+#   ]
+# }
 
 variable "bucket_url" {
   description = "Bucket URL for whent he VCD binary and the VCD Java keystore file reside. - gs://<bucket-name>"
@@ -138,13 +138,20 @@ variable "vcd_db_username_password" {
   default     = ""
 }
 
-variable "vcd_keystore_filename" {
-  description = "VCD Java Keystore filename"
-  default     = "certificates.ks"
+variable "vcd_cert_file" {
+  type        = string
+  default     = ""
+  description = "vCD Certificate file. The file must be located in 'files/vcd-cert-file/' folder, e.g. - vcd_cert.pem."
 }
 
-variable "vcd_keystore_filename_password" {
-  description = "VCD Java Keystore filename password"
+variable "vcd_cert_private_key_file" {
+  type        = string
+  default     = ""
+  description = "vCD Certificate Private Key file. The file must be located in 'files/vcd-cert-file/' folder, e.g. - vcd_cert.key."
+}
+
+variable "vcd_cert_private_key_password" {
+  description = "vCD Certificate Private Key Password."
   default     = ""
 }
 
@@ -216,7 +223,7 @@ variable "health_check" {
   })
   default = {
     type                = "http"
-    initial_delay_sec   = 240
+    initial_delay_sec   = 300
     check_interval_sec  = 10
     healthy_threshold   = 2
     timeout_sec         = 5
@@ -225,7 +232,7 @@ variable "health_check" {
     proxy_header        = "NONE"
     port                = 80
     request             = ""
-    request_path        = "/api/server_status"
+    request_path        = "/cloud/server_status"
     host                = ""
     enable_logging      = "false"
   }

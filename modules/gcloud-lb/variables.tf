@@ -18,10 +18,10 @@ variable "vcd_ui_mig" {
 
 variable "lb_cert_filename" {
   type        = string
-  description = "The path to the VCD UI Loadbalancer certificate file. The file must be located in 'files/vcd-lb-cert/' folder, e.g. - files/vcd-lb-cert/cert.crt."
+  description = "The path to the VCD UI Loadbalancer certificate file. The file must be located in 'files/vcd-cert-file/' folder, e.g. - files/vcd-lb-cert/vcd_cert.pem.."
 }
 
 variable "lb_cert_key_filename" {
   type        = string
-  description = "The path to the VCD UI Loadbalancer certificate key file. The file must be located in 'files/vcd-lb-cert/' folder, e.g. - files/vcd-lb-cert/cert.key."
+  description = "The path to the VCD UI Loadbalancer certificate key file. The file must be located in 'files/vcd-cert-file/' folder, e.g. - files/vcd-lb-cert/vcd_cert_decrypted.key."
 }

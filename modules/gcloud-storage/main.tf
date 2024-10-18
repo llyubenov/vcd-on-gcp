@@ -10,14 +10,20 @@ resource "google_storage_bucket" "vcd-bucket" {
   storage_class               = "STANDARD"
 }
 
-resource "google_storage_bucket_object" "vcd-binary" {
+resource "google_storage_bucket_object" "vcd_binary" {
   name                        = var.vcd_binary_filename
   source                      = "files/vcd-binaries/${var.vcd_binary_filename}"
   bucket                      = google_storage_bucket.vcd-bucket.name
 }
 
-resource "google_storage_bucket_object" "vcd-keystore-file" {
-  name                        = var.vcd_keystore_filename
-  source                      = "files/vcd-keystore-file/${var.vcd_keystore_filename}"
+resource "google_storage_bucket_object" "vcd_cert_file" {
+  name                        = var.vcd_cert_file
+  source                      = "files/vcd-cert-file/${var.vcd_cert_file}"
+  bucket                      = google_storage_bucket.vcd-bucket.name
+}
+
+resource "google_storage_bucket_object" "vcd_cert_private_key_file" {
+  name                        = var.vcd_cert_private_key_file
+  source                      = "files/vcd-cert-file/${var.vcd_cert_private_key_file}"
   bucket                      = google_storage_bucket.vcd-bucket.name
 }

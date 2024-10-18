@@ -1,16 +1,18 @@
 provider "google" {
-  credentials         = file("vlp-poc-credentials.json")
+  credentials         = file("vlp-vmworld-e1f951dc0df3.json")
   project             = var.gcloud_project
 }
 provider "google-beta" {
-  credentials         = file("vlp-poc-credentials.json")
+  credentials         = file("vlp-vmworld-e1f951dc0df3.json")
   project             = var.gcloud_project
 }
+
 module "gcloud-storage" {
   source                = "./modules/gcloud-storage"
   region                = var.gcloud_region
   vcd_binary_filename   = var.vcd_binary_filename
-  vcd_keystore_filename = var.vcd_keystore_filename
+  vcd_cert_file                  = var.vcd_cert_file
+  vcd_cert_private_key_file      = var.vcd_cert_private_key_file
 }
 
 module "gcloud-vpc-network" {
@@ -23,6 +25,7 @@ module "gcloud-filestore" {
   source             = "./modules/gcloud-filestore"
   region             = var.gcloud_region
   network            = module.gcloud-vpc-network.vcd-network
+  transfer_store_size_gb = var.transfer_store_size_gb
 }
 
 module "gloud-sql" {
@@ -36,7 +39,8 @@ module "gloud-sql" {
 module "bastion-vm" {
   source             = "./modules/gcloud-bastion"
   target_size        = 1
-  image_family       = "centos-stream-9"
+  image_family       = var.image_family
+  image_project      = var.image_project
   tags               = ["bastion"]
   machine_type       = "n1-standard-1"
   name               = "bastion-vm"
@@ -55,15 +59,16 @@ module "vcd-cells" {
   project                        = var.gcloud_project
   tags                           = ["vcd-cells"]
   region                         = var.gcloud_region
-  target_size_ui                 = var.target_size_ui
-  target_size_console            = var.target_size_console
+  target_ui_cells_number         = var.target_ui_cells_number
   network                        = module.gcloud-vpc-network.vcd-network
   subnetwork                     = module.gcloud-vpc-network.vcd-subnetwork
-  initial_vcd_cell_machine_type  = "e2-medium"
-  vcd_cells_machine_type         = "n2-standard-4"
-  image_family                   = "centos-stream-9"
-  disk_size_gb                   = 20
-  disk_type                      = "pd-standard"
+  initial_vcd_cell_machine_type  = var.initial_vcd_cell_machine_type
+  vcd_cells_machine_type         = var.vcd_cells_machine_type
+  image_family                   = var.image_family
+  image_project                  = var.image_project
+  disk_size_gb                   = var.disk_size_gb
+  disk_type                      = var.disk_type
+  vcd_heap_size_max              = var.vcd_heap_size_max
   vcd_ui_ip                      = module.gcloud-vpc-network.vcd-ui-ip
   bucket_url                     = module.gcloud-storage.bucket-url
   vcd_binary_filename            = var.vcd_binary_filename
@@ -71,8 +76,9 @@ module "vcd-cells" {
   vcd_db_name                    = module.gloud-sql.vcddb-name
   vcd_db_username                = module.gloud-sql.vcddb-username
   vcd_db_username_password       = module.gloud-sql.vcddb-username-password
-  vcd_keystore_filename          = var.vcd_keystore_filename
-  vcd_keystore_filename_password = var.vcd_keystore_password
+  vcd_cert_file                  = var.vcd_cert_file
+  vcd_cert_private_key_file      = var.vcd_cert_private_key_file
+  vcd_cert_private_key_password  = var.vcd_cert_private_key_password
   vcd_admin_username             = var.vcd_admin_username
   vcd_admin_email                = var.vcd_admin_email
   vcd_admin_password             = var.vcd_admin_password
@@ -83,10 +89,31 @@ module "vcd-cells" {
 
   module "gcloud-lb" {
   source               = "./modules/gcloud-lb"
-  lb_cert_filename     = var.lb_cert_filename
-  lb_cert_key_filename = var.lb_cert_key_filename
+  lb_cert_filename     = var.vcd_cert_file
+  lb_cert_key_filename = var.vcd_cert_private_key_file_decrypted
   vcd_ui_ip            = module.gcloud-vpc-network.vcd-ui-ip
-  #vcd_console_ip       = module.gcloud-vpc-network.vcd-console-ip
   vcd_ui_mig           = module.vcd-cells.vcd-ui-mig
-  #vcd_console_mig      = module.vcd-cells.vcd-console-mig
   }
+
+
+module "gcve-network" {
+  source             = "./modules/gcve-network"
+  gcve_network_name  = var.gcve_network_name
+  gcve_vpc_peering   = var.gcve_vpc_peering
+  vpc_network_id     = module.gcloud-vpc-network.vcd-network-id
+}
+
+module "gcve-private-cloud" {
+  for_each                    = { for sddc in var.gcve_sddc_variables : sddc.sddc_name => sddc if sddc.enabled }
+  source                      = "./modules/gcve-private-cloud"
+  sddc_name                   = each.key
+  sddc_zone                   = each.value.sddc_zone
+  sddc_cluster_name           = each.value.sddc_cluster_name
+  sddc_node_type_id           = each.value.sddc_node_type_id
+  sddc_node_count             = each.value.sddc_node_count
+  gcve_network_id             = module.gcve-network.gcve_network_id
+  sddc_mgmt_subnet_cidr       = each.value.sddc_mgmt_subnet_cidr
+  sddc_workload_subnet        = each.value.sddc_workload_subnet
+  sddc_workload_subnet_name   = each.value.sddc_workload_subnet_name
+  sddc_workload_subnet_cidr   = each.value.sddc_workload_subnet_cidr
+}

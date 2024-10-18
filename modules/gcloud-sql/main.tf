@@ -4,12 +4,12 @@ resource "random_id" "db_name_suffix" {
 
 resource "google_sql_database_instance" "vcddb-instance" {
   name                  = "vcddb-instance-${random_id.db_name_suffix.hex}"
-  database_version      = "POSTGRES_12"
+  database_version      = var.pgdb_version 
   region                = var.region
   deletion_protection   = var.sql_deletion_protection
   settings {
-    tier                = "db-custom-4-16384"
-    availability_type   = "REGIONAL"
+    tier                = var.pgdb_tier
+    availability_type   = var.pgdb_availability_type
     disk_autoresize     = true
     disk_size           = 20
     disk_type           = "PD_SSD"
@@ -54,6 +54,5 @@ resource "google_sql_database" "vcddb" {
   instance              = google_sql_database_instance.vcddb-instance.name
   charset               = "UTF8"
   collation             = "en_US.UTF8"
-  project               = "vlp-poc"
   depends_on            = [ google_sql_user.vcd-user ]
 }

@@ -13,8 +13,9 @@ data "template_file" "initial-vcd-cell-script" {
     vcd_db_name                    = var.vcd_db_name
     vcd_db_username                = var.vcd_db_username
     vcd_db_username_password       = var.vcd_db_username_password
-    vcd_keystore_filename          = var.vcd_keystore_filename
-    vcd_keystore_filename_password = var.vcd_keystore_filename_password
+    vcd_cert_file                  = var.vcd_cert_file
+    vcd_cert_private_key_file      = var.vcd_cert_private_key_file
+    vcd_cert_private_key_password  = var.vcd_cert_private_key_password
     vcd_admin_username             = var.vcd_admin_username
     vcd_admin_fullname             = var.vcd_admin_fullname
     vcd_admin_email                = var.vcd_admin_email
@@ -32,8 +33,10 @@ data "template_file" "vcd-cells-script" {
   vars = {
     bucket_url                     = var.bucket_url
     vcd_binary_filename            = var.vcd_binary_filename
-    vcd_keystore_filename          = var.vcd_keystore_filename
-    vcd_keystore_filename_password = var.vcd_keystore_filename_password
+    vcd_heap_size_max              = var.vcd_heap_size_max
+    vcd_cert_file                  = var.vcd_cert_file
+    vcd_cert_private_key_file      = var.vcd_cert_private_key_file
+    vcd_cert_private_key_password  = var.vcd_cert_private_key_password
     transfer_mount_ip              = var.transfer_mount_ip
     transfer_mount_name            = var.transfer_mount_name
   }
@@ -68,10 +71,12 @@ resource "google_compute_instance" "first-vcd-cell" {
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-rw"]
   }
+
+  allow_stopping_for_update = true
 }
 
-resource "time_sleep" "wait_5_minutes" {
-  create_duration = "5m"
+resource "time_sleep" "wait_10_minutes" {
+  create_duration = "10m"
   depends_on      = [google_compute_instance.first-vcd-cell]
 }
 
@@ -119,25 +124,12 @@ module "mig_ui" {
 
   project_id        = var.project
   region            = var.region
-  target_size       = var.target_size_ui
+  target_size       = var.target_ui_cells_number
   hostname          = "${var.vcd_cells_name_prefix}-ui"
   health_check      = var.health_check
   named_ports       = var.named_ports_ui
   instance_template = google_compute_instance_template.vcd-cells.self_link
 
-  depends_on        = [time_sleep.wait_5_minutes]
+  depends_on        = [time_sleep.wait_10_minutes]
 }
 
-# module "mig_console" {
-#   source  = "terraform-google-modules/vm/google//modules/mig"
-
-#   project_id        = var.project
-#   region            = var.region
-#   target_size       = var.target_size_console
-#   hostname          = "${var.vcd_cells_name_prefix}-console"
-#   health_check      = var.health_check
-#   named_ports       = var.named_ports_console
-#   instance_template = google_compute_instance_template.vcd-cells.self_link
-
-#   depends_on        = [time_sleep.wait_5_minutes]
-# }

@@ -1,6 +1,6 @@
-data "google_compute_global_address" "vcd-ui-ip" {
-  name = "vcd-ui-address"
-}
+# data "google_compute_global_address" "vcd-ui-ip" {
+#   name = "vcd-ui-address"
+# }
 
 # data "google_compute_global_address" "vcd-console-ip" {
 #   name = "vcd-console-address"
@@ -8,8 +8,8 @@ data "google_compute_global_address" "vcd-ui-ip" {
 
 resource "google_compute_ssl_certificate" "vcd-ui" {
   name        = "vcd-ui"
-  private_key = file("${path.root}/files/vcd-lb-cert/${var.lb_cert_key_filename}")
-  certificate = file("${path.root}/files/vcd-lb-cert/${var.lb_cert_filename}")
+  private_key = file("${path.root}/files/vcd-cert-file/${var.lb_cert_key_filename}")
+  certificate = file("${path.root}/files/vcd-cert-file/${var.lb_cert_filename}")
 
   lifecycle {
     create_before_destroy = true
