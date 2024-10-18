@@ -4,14 +4,14 @@ resource "google_compute_global_address" "vcd-ui-ip" {
   address_type = "EXTERNAL"
 }
 
-resource "google_compute_global_address" "vcd-console-ip" {
-  name         = "vcd-console-address"
-  ip_version   = "IPV4"
-  address_type = "EXTERNAL"
-}
+# resource "google_compute_global_address" "vcd-console-ip" {
+#   name         = "vcd-console-address"
+#   ip_version   = "IPV4"
+#   address_type = "EXTERNAL"
+# }
 
 resource "google_compute_network" "vcd-network" {
-  name                    = "vcd-network"
+  name                    = "vcd-net-${var.region}"
   auto_create_subnetworks = false
   routing_mode            = "REGIONAL"
 }
@@ -40,7 +40,7 @@ resource "google_compute_router_nat" "vcd-cloud-nat" {
 }
 
 resource "google_compute_subnetwork" "vcd-subnetwork" {
-  name          = "vcd-subnetwork"
+  name          = "vcd-subnet-${var.region}"
   ip_cidr_range = var.subnet_cidr
   region        = var.region
   network       = google_compute_network.vcd-network.id 

@@ -3,7 +3,7 @@ output vcd-ui-mig {
   description = "VCD UI Managed Instance Group"
 }
 
-output vcd-console-mig {
-  value       = module.mig_console.instance_group
-  description = "VCD Console Managed Instance Group"
-}
+# output vcd-console-mig {
+#   value       = module.mig_console.instance_group
+#   description = "VCD Console Managed Instance Group"
+# }

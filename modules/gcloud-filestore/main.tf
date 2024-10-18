@@ -1,10 +1,10 @@
 resource "google_filestore_instance" "vcd-transfer-store" {
   name = "vcd-transfer-store"
-  zone = "${var.region}-a"
+  location = "${var.region}-a"
   tier = "BASIC_HDD"
 
   file_shares {
-    capacity_gb = 1024
+    capacity_gb = var.transfer_store_size_gb
     name        = var.transfer_mount_name
   }
 

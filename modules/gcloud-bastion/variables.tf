@@ -20,12 +20,12 @@ variable "target_size" {
 
 variable "image_family" {
   description = "Source image family for the Bastion."
-  default     = "centos-7"
+  default     = ""
 }
 
 variable "image_project" {
   description = "Project where the source image for the Bastion comes from"
-  default     = "gce-uefi-images"
+  default     = ""
 }
 
 variable "tags" {
@@ -77,7 +77,7 @@ variable "health_check" {
     proxy_header        = string
     port                = number
     request             = string
-
+    enable_logging      = bool
     # Unused fields.
     request_path = string
     host         = string
@@ -93,7 +93,7 @@ variable "health_check" {
     proxy_header        = "NONE"
     port                = 22
     request             = ""
-
+    enable_logging      = "false"
     # Unused fields.
     request_path = ""
     host         = ""
