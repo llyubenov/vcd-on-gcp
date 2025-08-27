@@ -1,5 +1,5 @@
 resource "google_compute_global_address" "vcd-ui-ip" {
-  name         = "vcd-ui-address"
+  name         = "vcd-ui-address-${var.region}"
   ip_version   = "IPV4"
   address_type = "EXTERNAL"
 }
@@ -47,7 +47,7 @@ resource "google_compute_subnetwork" "vcd-subnetwork" {
 }
 
 resource "google_compute_global_address" "private_ip_alloc" {
-  name          = "private-ip-alloc"
+  name          = "private-ip-alloc-${var.region}"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 24
@@ -61,7 +61,7 @@ resource "google_service_networking_connection" "servicenetworking-googleapis-co
 }
 
 resource "google_compute_firewall" "inbound-ssh" {
-  name        = "allow-inbound-ssh"
+  name        = "allow-inbound-ssh-${var.region}"
   network     = google_compute_network.vcd-network.name
 
   allow {
@@ -74,7 +74,7 @@ resource "google_compute_firewall" "inbound-ssh" {
 }
 
 resource "google_compute_firewall" "intra-vcd-comms" {
-  name        = "intra-vcd-comms"
+  name        = "intra-vcd-comms-${var.region}"
   network     = google_compute_network.vcd-network.name
 
   allow {
@@ -86,7 +86,7 @@ resource "google_compute_firewall" "intra-vcd-comms" {
 }
 
 resource "google_compute_firewall" "transfer-store" {
-  name        = "transfer-store"
+  name        = "transfer-store-${var.region}"
   network     = google_compute_network.vcd-network.name
 
   allow {
@@ -104,7 +104,7 @@ resource "google_compute_firewall" "transfer-store" {
 }
 
 resource "google_compute_firewall" "vcd-healthcheck" {
-  name       = "vcd-healthcheck"
+  name       = "vcd-healthcheck-${var.region}"
   network    = google_compute_network.vcd-network.name
 
   allow {
@@ -117,7 +117,7 @@ resource "google_compute_firewall" "vcd-healthcheck" {
 }
 
 resource "google_compute_firewall" "vcd-lb-access" {
-  name       = "vcd-lb-access"
+  name       = "vcd-lb-access-${var.region}"
   network    = google_compute_network.vcd-network.name
 
   allow {

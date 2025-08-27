@@ -12,18 +12,18 @@ resource "google_storage_bucket" "vcd-bucket" {
 
 resource "google_storage_bucket_object" "vcd_binary" {
   name                        = var.vcd_binary_filename
-  source                      = "files/vcd-binaries/${var.vcd_binary_filename}"
+  source                      = "${path.module}/../../files/vcd-binaries/${var.vcd_binary_filename}"
   bucket                      = google_storage_bucket.vcd-bucket.name
 }
 
 resource "google_storage_bucket_object" "vcd_cert_file" {
   name                        = var.vcd_cert_file
-  source                      = "files/vcd-cert-file/${var.vcd_cert_file}"
+  source                      = "${path.module}/../../files/vcd-cert-file/${var.vcd_cert_file}"
   bucket                      = google_storage_bucket.vcd-bucket.name
 }
 
 resource "google_storage_bucket_object" "vcd_cert_private_key_file" {
   name                        = var.vcd_cert_private_key_file
-  source                      = "files/vcd-cert-file/${var.vcd_cert_private_key_file}"
+  source                      = "${path.module}/../../files/vcd-cert-file/${var.vcd_cert_private_key_file}"
   bucket                      = google_storage_bucket.vcd-bucket.name
 }

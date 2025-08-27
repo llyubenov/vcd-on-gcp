@@ -1,3 +1,7 @@
+
+variable "region" {
+  description = "The GCP region where the vcd instances resides."
+}
 variable "vcd_ui_ip" {
   description = "VCD UI Load Balancer IP Address. If this field is empty, an ephemeral IPv4 address will be assigned."
 }

@@ -4,7 +4,7 @@ data "google_compute_image" "vcd_image" {
 }
 
 data "template_file" "initial-vcd-cell-script" {
-  template = file("${path.root}/scripts/initial-vcd-cell-init.sh")
+  template = file("${path.module}/../../files/scripts/initial-vcd-cell-init.sh")
   vars = {
     vcd_ui_ip                      = var.vcd_ui_ip
     bucket_url                     = var.bucket_url
@@ -29,7 +29,7 @@ data "template_file" "initial-vcd-cell-script" {
 }
 
 data "template_file" "vcd-cells-script" {
-  template = file("${path.root}/scripts/vcd-cells-init-mig.sh")
+  template = file("${path.module}/../../files/scripts/vcd-cells-init-mig.sh")
   vars = {
     bucket_url                     = var.bucket_url
     vcd_binary_filename            = var.vcd_binary_filename
@@ -125,7 +125,7 @@ module "mig_ui" {
   project_id        = var.project
   region            = var.region
   target_size       = var.target_ui_cells_number
-  hostname          = "${var.vcd_cells_name_prefix}-ui"
+  hostname          = "${var.vcd_cells_name_prefix}-ui-${var.region}"
   health_check      = var.health_check
   named_ports       = var.named_ports_ui
   instance_template = google_compute_instance_template.vcd-cells.self_link

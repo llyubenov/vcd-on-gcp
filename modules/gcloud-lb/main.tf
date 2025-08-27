@@ -7,25 +7,32 @@
 # }
 
 resource "google_compute_ssl_certificate" "vcd-ui" {
-  name        = "vcd-ui"
-  private_key = file("${path.root}/files/vcd-cert-file/${var.lb_cert_key_filename}")
-  certificate = file("${path.root}/files/vcd-cert-file/${var.lb_cert_filename}")
+  name        = "vcd-ui-${var.region}"
+  private_key = file("${path.module}/../../files/vcd-cert-file/${var.lb_cert_key_filename}")
+  certificate = file("${path.module}/../../files/vcd-cert-file/${var.lb_cert_filename}")
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+resource "google_compute_ssl_policy" "vcd-ui-ssl-policy" {
+  name            = "vcd-ui-${var.region}"
+  profile         = "MODERN"
+  min_tls_version = "TLS_1_2"
+}
+
 resource "google_compute_url_map" "vcd-ui" {
-  name            = "vcd-ui"
+  name            = "vcd-ui-${var.region}"
   default_service = google_compute_backend_service.vcd-ui.id
 }
 
 resource "google_compute_global_forwarding_rule" "vcd-ui-https" {
-  name       = "vcd-ui-https-rule"
+  name       = "vcd-ui-https-rule-${var.region}"
   target     = google_compute_target_https_proxy.vcd-ui-https.self_link
   ip_address = var.vcd_ui_ip
   port_range = "443"
+  load_balancing_scheme = "EXTERNAL"
 }
 
 # resource "google_compute_global_forwarding_rule" "vcd-console-tcp" {
@@ -36,10 +43,10 @@ resource "google_compute_global_forwarding_rule" "vcd-ui-https" {
 # }
 
 resource "google_compute_target_https_proxy" "vcd-ui-https" {
-  name    = "vcd-ui-https-proxy"
+  name    = "vcd-ui-https-proxy-${var.region}"
   url_map = google_compute_url_map.vcd-ui.id
-
   ssl_certificates = [google_compute_ssl_certificate.vcd-ui.id]
+  ssl_policy = google_compute_ssl_policy.vcd-ui-ssl-policy.id
 }
 
 # resource "google_compute_target_tcp_proxy" "vcd-console-tcp" {
@@ -48,10 +55,11 @@ resource "google_compute_target_https_proxy" "vcd-ui-https" {
 # }
 
 resource "google_compute_backend_service" "vcd-ui" {
-  name                            = "vcd-ui-backend"
+  name                            = "vcd-ui-backend-${var.region}"
   port_name                       = "https"
   protocol                        = "HTTPS"
-  timeout_sec                     = null
+  #compression_mode                = "AUTOMATIC"
+  timeout_sec                     = 9000
   connection_draining_timeout_sec = null
   enable_cdn                      = false
   security_policy                 = null
@@ -106,7 +114,7 @@ resource "google_compute_backend_service" "vcd-ui" {
 # }
 
 resource "google_compute_health_check" "vcd-health-check" {
-  name        = "vcd-health-check"
+  name        = "vcd-health-check-${var.region}"
   description = "Health check via http"
 
   timeout_sec         = 5
