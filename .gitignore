@@ -1,6 +1,7 @@
 # Local .terraform directories
 .DS_Store
 **/.terraform/*
+**/.terragrunt-cache/*
 *.json
 /files/vcd-binaries/*.bin
 /files/vcd-keystore-file/*.ks

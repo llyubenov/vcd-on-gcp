@@ -124,8 +124,14 @@ variable "vapp_networks_default_segment_profile_template_id" {
   default     = ""
 }
 
-variable "vdc_catalog_names" {
-  description = "Name of catalog/s to be created in this VDC."
-  type        = list(string)
-  default     = []
+variable "create_vdc_catalog" {
+  description = "Create a Catalog in the VDC that's being created."
+  type        = bool
+  default     = false
+}
+
+variable "vdc_catalog_name" {
+  description = "Name of catalog to be created in this VDC."
+  type        = string
+  default     = ""
 }

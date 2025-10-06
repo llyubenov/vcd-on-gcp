@@ -114,7 +114,7 @@ vcd_provider_vdc_variables = [
     nsxt_manager_name = "us-west2-sddc1-nsxt"
     network_pool_name = "us-west2-vcd01-pvdc1-netpool"
     transport_zone_name = "TZ-OVERLAY"
-    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6"]
+    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6","gc-nfs-datatore"]
   },
   {
     enabled = true
@@ -124,7 +124,7 @@ vcd_provider_vdc_variables = [
     nsxt_manager_name = "us-west2-sddc2-nsxt"
     network_pool_name = "us-west2-vcd01-pvdc2-netpool"
     transport_zone_name = "TZ-OVERLAY"
-    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6"]
+    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6","gc-nfs-datatore"]
   },
   {
     enabled = true
@@ -134,7 +134,7 @@ vcd_provider_vdc_variables = [
     nsxt_manager_name = "us-west2-sddc3-nsxt"
     network_pool_name = "us-west2-vcd01-pvdc3-netpool"
     transport_zone_name = "TZ-OVERLAY"
-    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6"]
+    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6","gc-nfs-datatore"]
   },
   {
     enabled = true
@@ -144,12 +144,36 @@ vcd_provider_vdc_variables = [
     nsxt_manager_name = "us-west2-sddc4-nsxt"
     network_pool_name = "us-west2-vcd01-pvdc4-netpool"
     transport_zone_name = "TZ-OVERLAY"
-    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6"]
+    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","gc-nfs-datatore"]
   },
 ]
 
 #### VCD Org VDCs
 vcd_org_vdc_variables = [
+  {
+    enabled = true
+    vdc_name = "us-west2-vcd01-gc1"
+    org_name = "us-west2-vcd01-explore"
+    provider_vdc_name = "us-west2-vcd01-pvdc1"
+    edge_cluster_name = "edge-cluster"
+    network_pool_name = "us-west2-vcd01-pvdc1-netpool"
+    vdc_networks_default_segment_profile_template_id = null
+    vapp_networks_default_segment_profile_template_id = null
+    allocation_model = "Flex"
+    cpu_allocated_mhz = 1000
+    cpu_limit_mhz = 1000
+    cpu_guaranteed = 0
+    cpu_speed = 2600
+    memory_allocated_mb = 512
+    memory_limit_mb = 512
+    storage_profile_name = "gc-nfs-datatore"
+    storage_profile_limit_mb = 31457280
+    enable_thin_provisioning = true
+    enable_fast_provisioning = false
+    network_quota = 1000
+    create_vdc_catalog = true
+    vdc_catalog_name = "gc-catalog"
+  },
   {
     enabled = true
     vdc_name = "us-west2-vcd01-vdc1"
@@ -171,6 +195,8 @@ vcd_org_vdc_variables = [
     enable_thin_provisioning = true
     enable_fast_provisioning = true
     network_quota = 1000
+    create_vdc_catalog = true
+    vdc_catalog_name = ""
   },
   {
     enabled = true
@@ -193,6 +219,8 @@ vcd_org_vdc_variables = [
     enable_thin_provisioning = true
     enable_fast_provisioning = true
     network_quota = 1000
+    create_vdc_catalog = true
+    vdc_catalog_name = ""
   },
   {
     enabled = true
@@ -215,6 +243,8 @@ vcd_org_vdc_variables = [
     enable_thin_provisioning = true
     enable_fast_provisioning = true
     network_quota = 1000
+    create_vdc_catalog = true
+    vdc_catalog_name = ""
   },
   {
     enabled = true
@@ -237,6 +267,8 @@ vcd_org_vdc_variables = [
     enable_thin_provisioning = true
     enable_fast_provisioning = true
     network_quota = 1000
+    create_vdc_catalog = true
+    vdc_catalog_name = ""
   }
 ]
 

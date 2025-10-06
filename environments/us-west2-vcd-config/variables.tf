@@ -175,6 +175,8 @@ variable "vcd_org_vdc_variables" {
     enable_thin_provisioning = bool
     enable_fast_provisioning = bool
     network_quota = number
+    create_vdc_catalog = bool
+    vdc_catalog_name = string
   }))
   default = [
   {
@@ -198,6 +200,8 @@ variable "vcd_org_vdc_variables" {
     enable_thin_provisioning = true
     enable_fast_provisioning = true
     network_quota = 1000
+    create_vdc_catalog = false
+    vdc_catalog_name = ""
   },
   ]
 }

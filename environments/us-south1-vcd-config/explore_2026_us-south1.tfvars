@@ -144,7 +144,7 @@ vcd_provider_vdc_variables = [
     nsxt_manager_name = "us-south1-sddc4-nsxt"
     network_pool_name = "us-south1-vcd01-pvdc4-netpool"
     transport_zone_name = "TZ-OVERLAY"
-    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5","vSAN ESA Default Policy - RAID6"]
+    storage_profile_names =  ["vSAN Default Storage Policy","vSAN ESA Default Policy - RAID5"]
   },
 ]
 

@@ -62,17 +62,19 @@ resource "vcd_org_vdc_nsxt_network_profile" "vdc_network_profile" {
 
 #### Default Catalog for this Org VDC
 data "vcd_storage_profile" "storage_profile" {
+  count = var.create_vdc_catalog ? 1 : 0
   org  = var.org_name
   vdc  = vcd_org_vdc.org_vdc.name
   name = var.storage_profile_name
 }
 
 resource "vcd_catalog" "vdc_Catalog" {
+  count = var.create_vdc_catalog ? 1 : 0
   org = var.org_name
 
-  name               = "${vcd_org_vdc.org_vdc.name}-catalog"
+  name               = var.vdc_catalog_name != "" ? var.vdc_catalog_name : "${vcd_org_vdc.org_vdc.name}-catalog"
   description        = "Default VDC catalog"
-  storage_profile_id = data.vcd_storage_profile.storage_profile.id
+  storage_profile_id = data.vcd_storage_profile.storage_profile[0].id
 
   delete_recursive = true
   delete_force     = true

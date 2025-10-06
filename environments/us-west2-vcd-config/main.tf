@@ -128,6 +128,8 @@ module "vcd_org_vdc" {
   enable_thin_provisioning   = each.value.enable_thin_provisioning
   enable_fast_provisioning   = each.value.enable_fast_provisioning
   network_quota              = each.value.network_quota
+  create_vdc_catalog         = each.value.create_vdc_catalog
+  vdc_catalog_name           = each.value.vdc_catalog_name
 }
 
 # #### Create Org VDC Routed Network
