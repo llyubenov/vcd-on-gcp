@@ -1,6 +1,0 @@
-terraform {
-    backend "gcs" {
-        bucket = "dvcf01-hol-gcve-terraform-state"  # Replace with your bucket name
-        prefix = "us-central-1/terraform.tfstate"      # Optional: prefix for the state file
-    }
-}
