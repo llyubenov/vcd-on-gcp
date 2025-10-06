@@ -1,5 +1,6 @@
 include "root" {
     path = find_in_parent_folders("root.hcl")
+    expose = true
 }
 
 terraform {
@@ -7,7 +8,7 @@ terraform {
 }
 
 inputs = {
-    gcve_network_name = "sddc-network-us-west2"
+    gcve_network_id = "projects/${include.root.locals.project}/locations/global/vmwareEngineNetworks/${include.root.locals.gcve_network_name}"
     sddc_name = "us-west2-sddc11"
     sddc_zone = "us-west2-a"
     sddc_cluster_name = "us-west2-sddc11-cl01"
