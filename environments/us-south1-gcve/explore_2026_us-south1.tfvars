@@ -42,7 +42,7 @@ gcve_sddc_variables = [
     sddc_zone = "us-south1-b"
     sddc_cluster_name = "us-south1-sddc1-cl01"
     sddc_node_type_id = "standard-72"
-    sddc_node_count = 20
+    sddc_node_count = 5
     sddc_mgmt_subnet_cidr = "10.0.0.0/23"
     sddc_workload_subnet =  true
     sddc_workload_subnet_name = "service-1"
@@ -54,7 +54,7 @@ gcve_sddc_variables = [
     sddc_zone = "us-south1-b"
     sddc_cluster_name = "us-south1-sddc2-cl01"
     sddc_node_type_id = "standard-72"
-    sddc_node_count = 20
+    sddc_node_count = 5
     sddc_mgmt_subnet_cidr = "10.0.4.0/23"
     sddc_workload_subnet =  true
     sddc_workload_subnet_name = "service-1"
@@ -66,23 +66,11 @@ gcve_sddc_variables = [
     sddc_zone = "us-south1-b"
     sddc_cluster_name = "us-south1-sddc3-cl01"
     sddc_node_type_id = "standard-72"
-    sddc_node_count = 20
+    sddc_node_count = 5
     sddc_mgmt_subnet_cidr = "10.0.8.0/23"
     sddc_workload_subnet =  true
     sddc_workload_subnet_name = "service-1"
     sddc_workload_subnet_cidr = "10.0.10.0/23"
-  },
-  {
-    enabled = true
-    sddc_name = "us-south1-sddc4"
-    sddc_zone = "us-south1-b"
-    sddc_cluster_name = "us-south1-sddc4-cl01"
-    sddc_node_type_id = "standard-72"
-    sddc_node_count = 24
-    sddc_mgmt_subnet_cidr = "10.0.12.0/22"
-    sddc_workload_subnet =  false
-    sddc_workload_subnet_name = "service-1"
-    sddc_workload_subnet_cidr = "10.0.16.0/23"
   }
 ]
 
